@@ -25,7 +25,7 @@ const LandingPage = async () => {
           //   <h1>Product name: {data.title}</h1>
           // </div>
           
-          <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div  key={data.id} class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
               <Image class="rounded-t-lg" src={data?.images?.[1] ?? "/image/bicycle.png"} alt="" width={400} height={500} />
             </a>
