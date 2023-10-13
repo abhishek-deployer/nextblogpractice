@@ -1,14 +1,22 @@
 import axios from "axios";
 import Image from "next/image";
+import { addItem } from "@/redux/cartSlice";
+import AddBuy from "./addBuy";
 async function productDetails(id) {
   const response = await axios.get(`https://dummyjson.com/products/${id}`);
-  console.log("details", response.data);
   return response.data;
 }
+export async function generateMetadata({ params }){
+  const { id } = params;
+  const datas = await productDetails(id);
 
+  return {
+    title: datas?.title,
+    description: datas?.description,
+  };
+}
 const Page = async ({ params }) => {
   const data = await productDetails(params.id);
-
   return (
     <>
       <h1 className="text-red-500 text-center text-2xl">
@@ -27,17 +35,16 @@ const Page = async ({ params }) => {
         </div>
         <div className="flex-1 p-5">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Noteworthy technology acquisitions 2021
+            {data.title}
           </h5>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Here are the biggest enterprise technology acquisitions of 2021 so
-            far, in reverse chronological order.
+            {data.description}
           </p>
           {/* Other details can go here */}
+          <AddBuy id={data.id} name={data.title} price={data.price} img={data?.images?.[1]}/>
+       
         </div>
       </div>
-
-     
     </>
   );
 };
